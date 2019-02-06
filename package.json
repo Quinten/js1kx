@@ -1,0 +1,23 @@
+{
+  "name": "js1kx",
+  "version": "0.0.1",
+  "description": "js1k tenth edition dabbles",
+  "main": "src/index.js",
+  "scripts": {
+    "watch": "node watch.js",
+    "deploy": "git subtree push --prefix pub/ origin gh-pages"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Quinten/js1kx.git"
+  },
+  "author": "Quinten Clause",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Quinten/js1kx/issues"
+  },
+  "homepage": "https://github.com/Quinten/js1kx#readme",
+  "dependencies": {
+    "babel-minify": "^0.5.0"
+  }
+}
