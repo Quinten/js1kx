@@ -1,5 +1,24 @@
-<script>
-    window.a = 'hello js';
-</script>
-<pre>Wait for it</pre>
-<script src="index.min.js"></script>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>js1kx</title>
+    <meta name="description" content="js1k tenth edition dabbles">
+    <meta name="author" content="Quinten Clause">
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="c" />
+    <script>
+        window.a = document.getElementById('c');
+        window.c = window.a.getContext('2d');
+        window.a.width = window.innerWidth;
+        window.a.height = window.innerHeight;
+    </script>
+    <script src="index.min.js"></script>
+</body>
+</html>
