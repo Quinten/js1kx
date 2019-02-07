@@ -1,5 +1,3 @@
-var verylong = 'patience you must have my young padawan';
 console.log(a);
-setTimeout(() => {
-    alert(verylong);
-}, 3000);
+c.fillStyle = 'Tan';
+c.fillRect(0, 0, a.width, a.height);
