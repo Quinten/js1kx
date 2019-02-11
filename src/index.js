@@ -1,33 +1,35 @@
 c.fillStyle = 'Tan';
 c.fillRect(0, 0, a.width, a.height);
 
+let r = Math.random;
+
 let plotter = {
     x: a.width / 2,
     y: a.height / 2,
-    cp1x: 0,
-    cp1y: 0,
-    cp2x: 0,
-    cp2y: 0,
-    alpha: 0,
-    down: false
+    e: 0, // control point 1 x
+    f: 0, // control point 1 y
+    g: 0, // control point 2 x
+    h: 0, // control point 2 y
+    a: 0, // alpha
+    d: false //down
 };
 
-plotter.cp2x = plotter.x - 20;
-plotter.cp2y = plotter.y - 40;
+plotter.g = plotter.x - 20;
+plotter.h = plotter.y - 40;
 
 let u = () => {
 
     c.beginPath();
     c.moveTo(plotter.x, plotter.y);
 
-    var newX = plotter.x + 80 - Math.random() * 160;
+    var newX = plotter.x + 80 - r() * 160;
     if (newX > a.width) {
         newX = a.width;
     }
     if (newX < 0) {
         newX = 0;
     }
-    var newY = plotter.y + 80 - Math.random() * 160;
+    var newY = plotter.y + 80 - r() * 160;
     if (newY > a.height) {
         newY = a.height;
     }
@@ -35,32 +37,32 @@ let u = () => {
         newY = 0;
     }
 
-    plotter.cp1x = plotter.x + plotter.x - plotter.cp2x;
-    plotter.cp1y = plotter.y + plotter.y - plotter.cp2y;
+    plotter.e = plotter.x + plotter.x - plotter.g;
+    plotter.f = plotter.y + plotter.y - plotter.h;
 
-    plotter.cp2x = newX + plotter.y - plotter.cp1y;
-    plotter.cp2y = newY + plotter.x - plotter.cp1x;
+    plotter.g = newX + plotter.y - plotter.f;
+    plotter.h = newY + plotter.x - plotter.e;
 
     plotter.x = newX;
     plotter.y = newY;
 
-    c.bezierCurveTo(plotter.cp1x, plotter.cp1y, plotter.cp2x, plotter.cp2y, plotter.x, plotter.y);
+    c.bezierCurveTo(plotter.e, plotter.f, plotter.g, plotter.h, plotter.x, plotter.y);
 
-    if (plotter.down) {
-        plotter.alpha -= 0.01;
-        if (plotter.alpha < 0) {
-            plotter.alpha = 0;
-            plotter.down = false;
+    if (plotter.d) {
+        plotter.a -= 0.01;
+        if (plotter.a < 0) {
+            plotter.a = 0;
+            plotter.d = false;
         }
     } else {
-        plotter.alpha += 0.01;
-        if (plotter.alpha > 1) {
-            plotter.alpha = 1;
-            plotter.down = true;
+        plotter.a += 0.01;
+        if (plotter.a > 1) {
+            plotter.a = 1;
+            plotter.d = true;
         }
     }
 
-    c.strokeStyle = "rgba(35,33,23," + plotter.alpha + ")";
+    c.strokeStyle = "rgba(35,33,23," + plotter.a + ")";
     c.stroke();
 
     requestAnimationFrame(u);
