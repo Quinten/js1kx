@@ -1,11 +1,17 @@
-c.fillStyle = 'Tan';
-c.fillRect(0, 0, a.width, a.height);
-
+let w = a.width / 2;
+let h = a.height / 2;
+let m = Math.min(w, h) * 2 / 3;
 let r = Math.random;
 
+c.translate(w, h);
+c.strokeStyle = 'Snow';
+c.fillStyle = 'Tan';
+c.fillRect(-w, -h, w * 2, h * 2);
+c.rotate(.8);
+
 let plotter = {
-    x: a.width / 2,
-    y: a.height / 2,
+    x: 0,
+    y: 0,
     e: 0, // control point 1 x
     f: 0, // control point 1 y
     g: 0, // control point 2 x
@@ -23,18 +29,52 @@ let u = () => {
     c.moveTo(plotter.x, plotter.y);
 
     var newX = plotter.x + 80 - r() * 160;
-    if (newX > a.width) {
-        newX = a.width;
+    if (newX > m) {
+        newX = m;
     }
-    if (newX < 0) {
-        newX = 0;
+    if (newX < -m) {
+        newX = -m;
     }
     var newY = plotter.y + 80 - r() * 160;
-    if (newY > a.height) {
-        newY = a.height;
+    if (newY > m) {
+        newY = m;
     }
-    if (newY < 0) {
-        newY = 0;
+    if (newY < -m) {
+        newY = -m;
+    }
+
+    if (newX > m / 6) {
+        if (newY > m / 6) {
+            if (r() > .5) {
+                newY = m / 6;
+            } else {
+                newX = m / 6;
+            }
+        }
+        if (newY < -m / 6) {
+            if (r() > .5) {
+                newY = -m / 6;
+            } else {
+                newX = m / 6;
+            }
+        }
+    }
+
+    if (newX < -m / 6) {
+        if (newY > m / 6) {
+            if (r() > .5) {
+                newY = m / 6;
+            } else {
+                newX = -m / 6;
+            }
+        }
+        if (newY < -m / 6) {
+            if (r() > .5) {
+                newY = -m / 6;
+            } else {
+                newX = -m / 6;
+            }
+        }
     }
 
     plotter.e = plotter.x + plotter.x - plotter.g;
@@ -47,23 +87,26 @@ let u = () => {
     plotter.y = newY;
 
     c.bezierCurveTo(plotter.e, plotter.f, plotter.g, plotter.h, plotter.x, plotter.y);
+    c.stroke();
 
     if (plotter.d) {
-        plotter.a -= 0.01;
+        plotter.a -= 0.005;
         if (plotter.a < 0) {
             plotter.a = 0;
             plotter.d = false;
         }
     } else {
-        plotter.a += 0.01;
-        if (plotter.a > 1) {
-            plotter.a = 1;
+        plotter.a += 0.005;
+        if (plotter.a > 0.5) {
+            plotter.a = 0.5;
             plotter.d = true;
         }
     }
 
-    c.strokeStyle = "rgba(35,33,23," + plotter.a + ")";
-    c.stroke();
+    c.globalAlpha = plotter.a;
+
+    //c.fillStyle = 'rgba(210, 180, 140, .01)';
+    //c.fillRect(-w, -h, w * 2, h * 2);
 
     requestAnimationFrame(u);
 }
