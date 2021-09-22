@@ -1,2 +1,3 @@
 # js1kx
-js1k tenth edition dabbles
+
+never submitted demo for js1k tenth edition

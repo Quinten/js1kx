@@ -3,7 +3,7 @@ const fs = require('fs');
 // file watcher + minifier
 // _______________________
 
-const minify = require('babel-minify');
+const {minify} = require('terser');
 
 const files = [
     'index.js'
@@ -15,9 +15,12 @@ fs.watchFile('./src', (curr, prev) => {
     files.forEach((filename) => {
         origCode += fs.readFileSync('src/' + filename, 'utf8')
     });
-    let {code} = minify('(()=>{' + origCode + '})();', {});
-    fs.writeFileSync('pub/index.min.js', code);
-    console.log('Done...');
+    let doStuff = async _ => {
+        let {code} = await minify('(()=>{' + origCode + '})();');
+        fs.writeFileSync('pub/index.min.js', code);
+        console.log('Done...');
+    };
+    doStuff();
 });
 
 // server
